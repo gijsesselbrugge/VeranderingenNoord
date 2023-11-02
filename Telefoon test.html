@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historische veranderingen binnenstad-noord</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .leaflet-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+        .images-container {
+    position: relative;
+    width: 4400px; /* Breedte van de container aanpassen zoals gewenst */
+    height: 800px; /* Hoogte van de container aanpassen zoals gewenst */
+}
+        .popup-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .slider {
+            width: 80%;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .custom-marker {
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 50%;
+            line-height: 32px;
+        }
+
+        .leaflet-popup-content-wrapper {
+            width: 900px;
+            height: 900px;
+            max-width: 600px;
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+        }
+.historical-image,
+.current-image {
+    position: absolute;
+    width: 100%; /* Neemt de volledige breedte van de container in */
+    height: 100%; /* Neemt de volledige hoogte van de container in */
+    object-fit: cover; /* Behoudt de aspect ratio en knipt de afbeelding bij indien nodig */
+    
+}
+
+.historical-image {
+    left: 0; /* Historische afbeelding begint helemaal links in de container */
+}
+
+.current-image {
+    right: 0; /* Huidige afbeelding begint helemaal rechts in de container */
+}
+
+    </style>
+</head>
+
+<body>
+    
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([53.218277, 6.565820], 16);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var markersData = [
+            // Voeg hier je markergegevens toe
+            {
+        lat: 53.219711,
+        lng: 6.567395,
+        historicalImage: 'kwinkenplein 1962.jpg',
+        currentImage: 'IMG_8465.jpg'
+    },
+    {
+        lat: 53.217419,
+        lng: 6.559577,
+        historicalImage: 'Hoge der A met schip lucifer van bode Vrij uit Urlum 1931.jpg',
+        currentImage: 'IMG_8408.jpg'
+    },
+    {
+        lat: 53.216599,
+        lng: 6.561288,
+        historicalImage: 'Brugstraat 1905.jpg',
+        currentImage: 'IMG_8402.jpg'
+    },
+    {
+        lat: 53.216620,
+        lng: 6.559380,
+        historicalImage: 'Hoge der a richting noorden 1900-1910.jpg',
+        currentImage: 'IMG_8404.jpg'
+    },
+    {
+        lat: 53.219265,
+        lng: 6.564672,
+        historicalImage: '1959 rodeweeshuis.png',
+        currentImage: 'IMG_8451.jpg'
+    },
+    {
+        lat: 53.218658,
+        lng: 6.567624,
+        historicalImage: 'grote markt1890.jpg',
+        currentImage: 'IMG_8498.jpg'
+    },
+    {
+        lat: 53.219421,
+        lng: 6.557341,
+        historicalImage: 'noorderhaven 1905.jpg',
+        currentImage: 'IMG_8415.jpg'
+    },
+    {
+        lat: 53.218771,
+        lng: 6.557835,
+        historicalImage: 'Hoge dera visscherbrug.jpg',
+        currentImage: 'IMG_8413.jpg'
+    },
+    {
+        lat: 53.218240,
+        lng: 6.561555,
+        historicalImage: 'Turftorenstraat richting westen 1901.jpg',
+        currentImage: 'IMG_8420.jpg'
+    },
+    {
+        lat: 53.218460,
+        lng: 6.559753,
+        historicalImage: 'achterzijde pakhuis hoge der a vanaf de laan 1913.jpg',
+        currentImage: 'IMG_8424.jpg'
+    },
+    {
+        lat: 53.218797,
+        lng: 6.559158,
+        historicalImage: 'de laan richitng noordne.png',
+        currentImage: 'IMG_8425.jpg'
+    },
+    {
+        lat: 53.219581,
+        lng: 6.558176,
+        historicalImage: 'vijfde drift 1910.jpg',
+        currentImage: 'IMG_8434.jpg'
+    },
+    {
+        lat: 53.218534,
+        lng: 6.561868,
+        historicalImage: 'kleine kromme elleboog 1905.png',
+        currentImage: 'IMG_8437.jpg'
+    },
+    {
+        lat: 53.218832,
+        lng: 6.562356,
+        historicalImage: 'Broerkerk (nu UB).jpg',
+        currentImage: 'IMG_8440.jpg'
+    },
+    {
+        lat: 53.219269,
+        lng: 6.563258,
+        historicalImage: 'Academiegebouw 1890-1906.jpg',
+        currentImage: 'IMG_8442.jpg'
+    },
+    {
+        lat: 53.219256,
+        lng: 6.564589,
+        historicalImage: 'Oude boteringestraat en rode weeshuisgang 1893.jpg',
+        currentImage: 'IMG_8445.jpg'
+    },
+    {
+        lat: 53.219501,
+        lng: 6.564657,
+        historicalImage: 'Oude boteringestraat.jpg',
+        currentImage: 'IMG_8448.jpg'
+    },
+    {
+        lat: 53.219674,
+        lng: 6.567816,
+        historicalImage: 'Kwinkenplein vanaf gemeentegebouw 1956.png',
+        currentImage: 'IMG_8467.jpg'
+    },
+    {
+        lat: 53.219674,
+        lng: 6.567816,
+        historicalImage: 'Kwinkenplein vanaf gemeentegebouw 1956.png',
+        currentImage: 'IMG_8467.jpg'
+    },
+    {
+        lat: 53.221245,
+        lng: 6.568085,
+        historicalImage: 'sint walbrugstraat 1930.png',
+        currentImage: 'IMG_8483.jpg'
+    },
+    {
+        lat: 53.219883,
+        lng: 6.567677,
+        historicalImage: 'kreupelstraat richting het zuiden 1933-1943.png',
+        currentImage: 'IMG_8469.jpg'
+    },
+    {
+        lat: 53.219982,
+        lng: 6.566545,
+        historicalImage: 'oude ebbingestraat.jpg',
+        currentImage: 'IMG_8476.jpg'
+    },
+    {
+        lat: 53.220332,
+        lng: 6.569195,
+        historicalImage: 'martinikerkhof 1930.jpg',
+        currentImage: 'IMG_8492.jpg'
+    },
+    {
+        lat: 53.219587,
+        lng: 6.570676,
+        historicalImage: 'sint jans 1920.png',
+        currentImage: 'IMG_8493.jpg'
+    },
+    {
+        lat: 53.219051,
+        lng: 6.568078,
+        historicalImage: 'grote markt hoofdwacht 1941.jpg',
+        currentImage: 'IMG_8495.jpg'
+    },
+    {
+        lat: 53.218476,
+        lng: 6.568138,
+        historicalImage: 'oostkant grote markt 1900.jpg',
+        currentImage: 'IMG_8497.jpg',
+        iconContent: 'A'
+    },
+    {
+        lat: 53.217872,
+        lng: 6.566497,
+        historicalImage: 'guldenstraat richting noorden 1900.jpg',
+        currentImage: 'IMG_8505.jpg'
+    },
+    {
+        lat: 53.218286,
+        lng: 6.564206,
+        historicalImage: 'Zwanestraat 1900-1905.jpg',
+        currentImage: 'IMG_8509.jpg'
+    },
+    {
+        lat: 53.219825,
+        lng: 6.561551,
+        historicalImage: 'oude kijk in t jatstraat 1930.jpg',
+        currentImage: 'IMG_8516.jpg'
+    },
+    {
+        lat: 53.218858,
+        lng: 6.566026,
+        historicalImage: 'Grote markt Noord 1910.jpg',
+        currentImage: 'IMG_8502.jpg'
+    },
+        ];
+
+        markersData.forEach(function (marker) {
+            var popupContent = `
+                <div class="popup-content">
+                    <img class="popup-image historical-image" src="${marker.historicalImage}" alt="Historical Image">
+                    <img class="popup-image current-image" src="${marker.currentImage}" alt="Current Image">
+                    <input class="slider" type="range" min="0" max="1" step="0.01" value="0">
+                </div>
+            `;
+
+            var customPopup = L.popup().setContent(popupContent);
+
+            L.marker([marker.lat, marker.lng], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: marker.iconContent // Voeg hier eventueel aangepaste markerinhoud toe
+                })
+            }).addTo(map).bindPopup(customPopup).on('click', function () {
+                var slider = document.querySelector('.slider');
+                var historicalImage = document.querySelector('.historical-image');
+                var currentImage = document.querySelector('.current-image');
+
+                slider.addEventListener('input', function () {
+                    var transparencyValue = slider.value;
+                    historicalImage.style.opacity = transparencyValue;
+                    currentImage.style.opacity = 1 - transparencyValue;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
