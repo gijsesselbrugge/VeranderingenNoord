@@ -23,12 +23,12 @@
         }
         .images-container {
     position: relative;
-    width: 4400px; /* Breedte van de container aanpassen zoals gewenst */
-    height: 800px; /* Hoogte van de container aanpassen zoals gewenst */
+    width: 400px; /* Breedte van de container aanpassen zoals gewenst */
+    height: 400px; /* Hoogte van de container aanpassen zoals gewenst */
 }
         .popup-image {
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
             height: auto;
             border-radius: 10px;
         }
@@ -52,8 +52,8 @@
         }
 
         .leaflet-popup-content-wrapper {
-            width: 900px;
-            height: 900px;
+            width: 100px;
+            height: 100px;
             max-width: 600px;
         }
 
@@ -294,6 +294,19 @@
                 })
             }).addTo(map).bindPopup(customPopup).on('click', function () {
                 var slider = document.querySelector('.slider');
+                slider.addEventListener('input', function() {
+    // Functie om de afbeeldingen transparantie in te stellen
+    updateImagesTransparency(slider.value);
+});
+
+// Functie om de transparantie van de afbeeldingen in te stellen
+function updateImagesTransparency(transparencyValue) {
+    var historicalImage = document.querySelector('.historical-image');
+    var currentImage = document.querySelector('.current-image');
+    
+    historicalImage.style.opacity = transparencyValue;
+    currentImage.style.opacity = 1 - transparencyValue;
+}
                 var historicalImage = document.querySelector('.historical-image');
                 var currentImage = document.querySelector('.current-image');
 
