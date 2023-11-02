@@ -93,6 +93,38 @@
         }
 
 /* Standaard stijlen voor grotere schermen */
+/* Standaard stijlen voor desktop */
+body {
+    font-size: 16px;
+    /* Andere desktopstijlen... */
+}
+
+/* Mediaquery voor tablets en kleine laptops */
+@media (max-width: 1024px) {
+    body {
+        font-size: 14px;
+        /* Aanpassingen voor tablets... */
+    }
+}
+
+/* Mediaquery voor smartphones */
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+        /* Aanpassingen voor smartphones... */
+    }
+
+    /* Verberg bepaalde elementen of pas hun stijl aan op smartphones */
+    .hide-on-mobile {
+        display: none;
+    }
+
+    /* Voorbeeld van het aanpassen van de lay-out op smartphones */
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+}
 
 /* Mediaquery voor schermen met een maximale breedte van 768px (typisch voor smartphones) */
 @media screen and (max-width: 768px) {
