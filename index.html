@@ -6,6 +6,7 @@
     <title>Historische veranderingen binnenstad-noord</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <img class="logo" src="LogoGroningen.png" alt="Logo">
+    
     </div>
     <style>
 /* Stijl voor de afbeeldingen binnen de pop-up */
@@ -91,6 +92,12 @@
             height: 700px; /* Hoogte van de kaartcontainer */
         }
 
+/* Standaard stijlen voor grotere schermen */
+
+/* Mediaquery voor schermen met een maximale breedte van 768px (typisch voor smartphones) */
+@media screen and (max-width: 768px) {
+    /* Aanpassingen voor kleinere schermen */
+}
 
 
 /* Andere CSS-stijlen blijven zoals eerder gedefinieerd */
@@ -304,6 +311,7 @@ function createPopupContent(marker) {
         <div class="popup-content">
             <img id="historical-image" class="popup-image" src="${historicalImageSrc}" alt="Historical Image">
             <img id="current-image" class="popup-image" src="${currentImageSrc}" alt="Current Image">
+            <img id="third-image" class="popup-image" src="${thirdImageSrc}" alt="Third Image">
             <input type="range" id="slider" class="slider" value="0" step="1" min="0" max="100">
             
         </div>
@@ -311,7 +319,24 @@ function createPopupContent(marker) {
 
     return popupContent;
 }
+// Rest van je code blijft hetzelfde...
 
+
+function onEachFeature(feature, layer) {
+    layer.on('click', function () {
+        var customPopup = L.popup()
+            .setLatLng(layer.getLatLng())
+            .setContent(createCustomPopup(feature, layer));
+
+        // Sluit de vorige pop-up als er een is en toon de nieuwe pop-up
+        if (map.currentPopup) {
+            map.currentPopup.removeFrom(map);
+        }
+
+        customPopup.addTo(map);
+        map.currentPopup = customPopup;
+    });
+}
 markersData.forEach(function(marker) {
     var popupContent = `
         <div class="popup">
@@ -331,6 +356,7 @@ markersData.forEach(function(marker) {
         })
     });
     
+var currentPopup;
 
     var customPopup = L.popup().setContent(popupContent);
     var tekstPerAfbeelding = {
